@@ -14,7 +14,10 @@ import CoreData
 extension Course: Identifiable {
 
     @nonobjc public class func fetchRequest() -> NSFetchRequest<Course> {
-        return NSFetchRequest<Course>(entityName: "Course")
+        let request = NSFetchRequest<Course>(entityName: "Course")
+        let sort = NSSortDescriptor(key: "name", ascending: true)
+        request.sortDescriptors = [sort]
+        return request
     }
 
     @NSManaged public var id: UUID

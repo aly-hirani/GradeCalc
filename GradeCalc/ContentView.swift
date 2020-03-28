@@ -11,9 +11,17 @@ import SwiftUI
 struct ContentView: View {
     @Environment(\.managedObjectContext) var managedObjectContext
     
-    @FetchRequest(entity: Course.entity(), sortDescriptors: []) var courses: FetchedResults<Course>
+    @FetchRequest(fetchRequest: Course.fetchRequest()) var courses
     
     @State var showAddCourseSheet = false
+    
+    var addButton: some View {
+        Button(action: {
+            self.showAddCourseSheet = true
+        }, label: {
+            Text("Add")
+        })
+    }
     
     var body: some View {
         NavigationView {
@@ -33,11 +41,7 @@ struct ContentView: View {
                 AddCourseSheet().environment(\.managedObjectContext, self.managedObjectContext)
             }
             .navigationBarTitle("Courses")
-            .navigationBarItems(trailing: Button(action: {
-                self.showAddCourseSheet = true
-            }, label: {
-                Text("Add")
-            }))
+            .navigationBarItems(trailing: addButton)
         }
     }
 }

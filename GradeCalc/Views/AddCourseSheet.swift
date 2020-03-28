@@ -16,6 +16,29 @@ struct AddCourseSheet: View {
     
     @State var showingAlert = false
     
+    var cancelButton: some View {
+        Button(action: {
+            self.presentationMode.wrappedValue.dismiss()
+        }) {
+            Text("Cancel")
+        }
+    }
+    
+    var doneButton: some View {
+        Button(action: {
+            if self.name.isEmpty {
+                self.showingAlert = true
+            } else {
+                let course = Course(context: self.managedObjectContext)
+                course.construct(name: self.name)
+                save(context: self.managedObjectContext)
+                self.presentationMode.wrappedValue.dismiss()
+            }
+        }) {
+            Text("Done")
+        }
+    }
+    
     var body: some View {
         NavigationView {
             Form {
@@ -24,27 +47,7 @@ struct AddCourseSheet: View {
                 }
             }
             .navigationBarTitle("Add Course")
-            .navigationBarItems(leading: Button(action: {
-                self.presentationMode.wrappedValue.dismiss()
-            }) {
-                Text("Cancel")
-                }, trailing: Button(action: {
-                    if self.name.isEmpty {
-                        self.showingAlert = true
-                    } else {
-                        let newCourse = Course(context: self.managedObjectContext)
-                        newCourse.id = UUID()
-                        newCourse.name = self.name
-                        do {
-                            try self.managedObjectContext.save()
-                            self.presentationMode.wrappedValue.dismiss()
-                        } catch {
-                            fatalError("\(error)")
-                        }
-                    }
-                }) {
-                    Text("Done")
-            })
+            .navigationBarItems(leading: cancelButton, trailing: doneButton)
         }
         .alert(isPresented: $showingAlert) {
             Alert(title: Text("Error"), message: Text("Course Name cannot be empty"), dismissButton: .cancel(Text("Dismiss")))
