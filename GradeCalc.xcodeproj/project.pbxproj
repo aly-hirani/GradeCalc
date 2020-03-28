@@ -15,6 +15,9 @@
 		4079D942242D97A800783454 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4079D941242D97A800783454 /* Preview Assets.xcassets */; };
 		4079D945242D97A800783454 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4079D943242D97A800783454 /* LaunchScreen.storyboard */; };
 		4079D950242D97A800783454 /* GradeCalcTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4079D94F242D97A800783454 /* GradeCalcTests.swift */; };
+		4079D95C242D9EBC00783454 /* Course+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4079D95A242D9EBC00783454 /* Course+CoreDataClass.swift */; };
+		4079D95D242D9EBC00783454 /* Course+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4079D95B242D9EBC00783454 /* Course+CoreDataProperties.swift */; };
+		4079D95F242DA1D100783454 /* AddCourseSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4079D95E242DA1D100783454 /* AddCourseSheet.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,6 +43,9 @@
 		4079D94B242D97A800783454 /* GradeCalcTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GradeCalcTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4079D94F242D97A800783454 /* GradeCalcTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradeCalcTests.swift; sourceTree = "<group>"; };
 		4079D951242D97A800783454 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4079D95A242D9EBC00783454 /* Course+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Course+CoreDataClass.swift"; sourceTree = "<group>"; };
+		4079D95B242D9EBC00783454 /* Course+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Course+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		4079D95E242DA1D100783454 /* AddCourseSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCourseSheet.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,6 +87,8 @@
 		4079D934242D97A500783454 /* GradeCalc */ = {
 			isa = PBXGroup;
 			children = (
+				4079D960242DAB7400783454 /* Models */,
+				4079D961242DAB8600783454 /* Views */,
 				4079D935242D97A600783454 /* AppDelegate.swift */,
 				4079D937242D97A600783454 /* SceneDelegate.swift */,
 				4079D93C242D97A600783454 /* ContentView.swift */,
@@ -108,6 +116,23 @@
 				4079D951242D97A800783454 /* Info.plist */,
 			);
 			path = GradeCalcTests;
+			sourceTree = "<group>";
+		};
+		4079D960242DAB7400783454 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				4079D95A242D9EBC00783454 /* Course+CoreDataClass.swift */,
+				4079D95B242D9EBC00783454 /* Course+CoreDataProperties.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		4079D961242DAB8600783454 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				4079D95E242DA1D100783454 /* AddCourseSheet.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -211,9 +236,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4079D95C242D9EBC00783454 /* Course+CoreDataClass.swift in Sources */,
 				4079D936242D97A600783454 /* AppDelegate.swift in Sources */,
 				4079D93B242D97A600783454 /* GradeCalc.xcdatamodeld in Sources */,
+				4079D95F242DA1D100783454 /* AddCourseSheet.swift in Sources */,
 				4079D93D242D97A600783454 /* ContentView.swift in Sources */,
+				4079D95D242D9EBC00783454 /* Course+CoreDataProperties.swift in Sources */,
 				4079D938242D97A600783454 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
