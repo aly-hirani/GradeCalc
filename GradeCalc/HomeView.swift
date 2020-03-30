@@ -1,5 +1,5 @@
 //
-//  ContentView.swift
+//  HomeView.swift
 //  GradeCalc
 //
 //  Created by Aly Hirani on 3/26/20.
@@ -8,28 +8,33 @@
 
 import SwiftUI
 
-struct ContentView: View {
+struct HomeView: View {
     @Environment(\.managedObjectContext) var managedObjectContext
     
     @FetchRequest(fetchRequest: Course.fetchRequest()) var courses
     
-    @State var showAddCourseSheet = false
+    @State private var showAddCourseSheet = false
     
-    var addButton: some View {
+    var addCourseButton: some View {
         Button(action: {
             self.showAddCourseSheet = true
         }) {
-            Text("Add")
+            Image(systemName: "plus.circle.fill")
+                .imageScale(.large)
+            Text("Add Course")
+                .fontWeight(.bold)
         }
+        .foregroundColor(.init(UIColor.systemTeal))
+        .padding()
     }
     
     var body: some View {
         NavigationView {
-            VStack {
+            VStack(alignment: .leading) {
                 List {
                     ForEach(courses) { course in
                         if !course.isDeleted {
-                            NavigationLink(destination: CourseView(course: course).environment(\.managedObjectContext, self.managedObjectContext)) {
+                            NavigationLink(destination: CourseView(course: course)) {
                                 Text(course.name)
                             }
                         }
@@ -37,22 +42,27 @@ struct ContentView: View {
                     .onDelete { offsets in
                         for index in offsets {
                             self.managedObjectContext.delete(self.courses[index])
-                            save(context: self.managedObjectContext)
                         }
+                        save(context: self.managedObjectContext)
                     }
                 }
-            }
-            .sheet(isPresented: $showAddCourseSheet) {
-                AddCourseSheet().environment(\.managedObjectContext, self.managedObjectContext)
+                addCourseButton
             }
             .navigationBarTitle("Courses")
-            .navigationBarItems(trailing: addButton)
         }
+        .sheet(isPresented: $showAddCourseSheet) {
+            AddCourseSheet()
+                .environment(\.managedObjectContext, self.managedObjectContext)
+        }
+    }
+    
+    init() {
+        UINavigationBar.appearance().largeTitleTextAttributes = [.foregroundColor: UIColor.systemTeal]
     }
 }
 
-struct ContentView_Previews: PreviewProvider {
+struct HomeView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView()
+        HomeView()
     }
 }

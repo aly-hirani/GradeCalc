@@ -10,7 +10,7 @@
 		4079D936242D97A600783454 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4079D935242D97A600783454 /* AppDelegate.swift */; };
 		4079D938242D97A600783454 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4079D937242D97A600783454 /* SceneDelegate.swift */; };
 		4079D93B242D97A600783454 /* GradeCalc.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 4079D939242D97A600783454 /* GradeCalc.xcdatamodeld */; };
-		4079D93D242D97A600783454 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4079D93C242D97A600783454 /* ContentView.swift */; };
+		4079D93D242D97A600783454 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4079D93C242D97A600783454 /* HomeView.swift */; };
 		4079D93F242D97A800783454 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4079D93E242D97A800783454 /* Assets.xcassets */; };
 		4079D942242D97A800783454 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4079D941242D97A800783454 /* Preview Assets.xcassets */; };
 		4079D945242D97A800783454 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4079D943242D97A800783454 /* LaunchScreen.storyboard */; };
@@ -38,7 +38,7 @@
 		4079D935242D97A600783454 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4079D937242D97A600783454 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		4079D93A242D97A600783454 /* GradeCalc.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = GradeCalc.xcdatamodel; sourceTree = "<group>"; };
-		4079D93C242D97A600783454 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		4079D93C242D97A600783454 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		4079D93E242D97A800783454 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4079D941242D97A800783454 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		4079D944242D97A800783454 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -97,7 +97,7 @@
 				4079D961242DAB8600783454 /* Views */,
 				4079D935242D97A600783454 /* AppDelegate.swift */,
 				4079D937242D97A600783454 /* SceneDelegate.swift */,
-				4079D93C242D97A600783454 /* ContentView.swift */,
+				4079D93C242D97A600783454 /* HomeView.swift */,
 				40CA3A402430050000D1FF15 /* Data.swift */,
 				4079D93E242D97A800783454 /* Assets.xcassets */,
 				4079D943242D97A800783454 /* LaunchScreen.storyboard */,
@@ -250,7 +250,7 @@
 				407C23E3243145A000422AD8 /* CourseView.swift in Sources */,
 				4079D93B242D97A600783454 /* GradeCalc.xcdatamodeld in Sources */,
 				4079D95F242DA1D100783454 /* AddCourseSheet.swift in Sources */,
-				4079D93D242D97A600783454 /* ContentView.swift in Sources */,
+				4079D93D242D97A600783454 /* HomeView.swift in Sources */,
 				4079D95D242D9EBC00783454 /* Course+CoreDataProperties.swift in Sources */,
 				407C23E52431581F00422AD8 /* EditCourseView.swift in Sources */,
 				4079D938242D97A600783454 /* SceneDelegate.swift in Sources */,

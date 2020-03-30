@@ -15,7 +15,7 @@ extension Course: Identifiable {
 
     @nonobjc public class func fetchRequest() -> NSFetchRequest<Course> {
         let request = NSFetchRequest<Course>(entityName: "Course")
-        let sort = NSSortDescriptor(key: "name", ascending: true)
+        let sort = NSSortDescriptor(keyPath: \Course.name, ascending: true)
         request.sortDescriptors = [sort]
         return request
     }

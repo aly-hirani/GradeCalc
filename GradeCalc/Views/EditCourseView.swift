@@ -9,28 +9,28 @@
 import SwiftUI
 
 struct EditCourseView: View {
-    @Environment(\.managedObjectContext) var managedObjectContext
+    var course: Course
     
-    @ObservedObject var course: Course
-    
-    @State var showingAlert = false
+    @State private var showingAlert = false
     
     var body: some View {
         Form {
             Section(header: Text("Course Details")) {
-                TextField(course.name, text: .init(get: { self.course.name }, set: { name in
-                    if name.isEmpty {
-                        self.showingAlert = true
-                    } else {
-                        self.course.objectWillChange.send()
-                        self.course.name = name
-                        save(context: self.managedObjectContext)
-                    }
-                }))
+                TextField(course.name, text: .init(get: { self.course.name }, set: setName))
             }
         }
+        .navigationBarTitle("Edit Course")
         .alert(isPresented: $showingAlert) {
             Alert(title: Text("Error"), message: Text("Course Name cannot be empty"), dismissButton: .cancel(Text("Dismiss")))
+        }
+    }
+    
+    private func setName(_ name: String) {
+        if name.isEmpty {
+            showingAlert = true
+        } else {
+            course.objectWillChange.send()
+            course.name = name
         }
     }
 }

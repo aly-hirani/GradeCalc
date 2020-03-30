@@ -12,9 +12,8 @@ struct AddCourseSheet: View {
     @Environment(\.managedObjectContext) var managedObjectContext
     @Environment(\.presentationMode) var presentationMode
     
-    @State var name = ""
-    
-    @State var showingAlert = false
+    @State private var name = ""
+    @State private var showingAlert = false
     
     var cancelButton: some View {
         Button(action: {

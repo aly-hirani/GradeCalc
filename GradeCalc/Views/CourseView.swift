@@ -13,18 +13,23 @@ struct CourseView: View {
     
     @ObservedObject var course: Course
     
-    @State var showingEditCourseView = false
+    @State private var showingEditCourseView = false
     
     var editButton: some View {
         Button(action: {
             self.showingEditCourseView = true
         }) {
-            Text("Edit")
+            Text("Edit Course")
         }
     }
     
+    var editCourseView: some View {
+        EditCourseView(course: course)
+            .onDisappear { save(context: self.managedObjectContext) }
+    }
+    
     var body: some View {
-        NavigationHelper(destination: EditCourseView(course: course).environment(\.managedObjectContext, self.managedObjectContext), isActive: $showingEditCourseView)
+        NavigationHelper(destination: editCourseView, isActive: $showingEditCourseView)
             .navigationBarTitle(course.name)
             .navigationBarItems(trailing: editButton)
     }
