@@ -18,9 +18,9 @@ struct ContentView: View {
     var addButton: some View {
         Button(action: {
             self.showAddCourseSheet = true
-        }, label: {
+        }) {
             Text("Add")
-        })
+        }
     }
     
     var body: some View {
@@ -28,11 +28,16 @@ struct ContentView: View {
             VStack {
                 List {
                     ForEach(courses) { course in
-                        Text(course.name)
+                        if !course.isDeleted {
+                            NavigationLink(destination: CourseView(course: course).environment(\.managedObjectContext, self.managedObjectContext)) {
+                                Text(course.name)
+                            }
+                        }
                     }
                     .onDelete { offsets in
                         for index in offsets {
                             self.managedObjectContext.delete(self.courses[index])
+                            save(context: self.managedObjectContext)
                         }
                     }
                 }

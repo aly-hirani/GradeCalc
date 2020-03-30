@@ -54,9 +54,3 @@ struct AddCourseSheet: View {
         }
     }
 }
-
-struct AddCourseSheet_Previews: PreviewProvider {
-    static var previews: some View {
-        AddCourseSheet()
-    }
-}

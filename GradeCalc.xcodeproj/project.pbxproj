@@ -18,6 +18,8 @@
 		4079D95C242D9EBC00783454 /* Course+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4079D95A242D9EBC00783454 /* Course+CoreDataClass.swift */; };
 		4079D95D242D9EBC00783454 /* Course+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4079D95B242D9EBC00783454 /* Course+CoreDataProperties.swift */; };
 		4079D95F242DA1D100783454 /* AddCourseSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4079D95E242DA1D100783454 /* AddCourseSheet.swift */; };
+		407C23E3243145A000422AD8 /* CourseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 407C23E2243145A000422AD8 /* CourseView.swift */; };
+		407C23E52431581F00422AD8 /* EditCourseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 407C23E42431581F00422AD8 /* EditCourseView.swift */; };
 		40CA3A412430050000D1FF15 /* Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40CA3A402430050000D1FF15 /* Data.swift */; };
 /* End PBXBuildFile section */
 
@@ -47,6 +49,8 @@
 		4079D95A242D9EBC00783454 /* Course+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Course+CoreDataClass.swift"; sourceTree = "<group>"; };
 		4079D95B242D9EBC00783454 /* Course+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Course+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		4079D95E242DA1D100783454 /* AddCourseSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCourseSheet.swift; sourceTree = "<group>"; };
+		407C23E2243145A000422AD8 /* CourseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseView.swift; sourceTree = "<group>"; };
+		407C23E42431581F00422AD8 /* EditCourseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditCourseView.swift; sourceTree = "<group>"; };
 		40CA3A402430050000D1FF15 /* Data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Data.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -134,6 +138,8 @@
 			isa = PBXGroup;
 			children = (
 				4079D95E242DA1D100783454 /* AddCourseSheet.swift */,
+				407C23E2243145A000422AD8 /* CourseView.swift */,
+				407C23E42431581F00422AD8 /* EditCourseView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -241,10 +247,12 @@
 			files = (
 				4079D95C242D9EBC00783454 /* Course+CoreDataClass.swift in Sources */,
 				4079D936242D97A600783454 /* AppDelegate.swift in Sources */,
+				407C23E3243145A000422AD8 /* CourseView.swift in Sources */,
 				4079D93B242D97A600783454 /* GradeCalc.xcdatamodeld in Sources */,
 				4079D95F242DA1D100783454 /* AddCourseSheet.swift in Sources */,
 				4079D93D242D97A600783454 /* ContentView.swift in Sources */,
 				4079D95D242D9EBC00783454 /* Course+CoreDataProperties.swift in Sources */,
+				407C23E52431581F00422AD8 /* EditCourseView.swift in Sources */,
 				4079D938242D97A600783454 /* SceneDelegate.swift in Sources */,
 				40CA3A412430050000D1FF15 /* Data.swift in Sources */,
 			);
