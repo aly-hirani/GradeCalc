@@ -9,13 +9,13 @@
 import SwiftUI
 
 struct CourseView: View {
-    @Environment(\.managedObjectContext) var managedObjectContext
+    @Environment(\.managedObjectContext) private var managedObjectContext
     
     @ObservedObject var course: Course
     
     @State private var showingEditCourseView = false
     
-    var editButton: some View {
+    private var editButton: some View {
         Button(action: {
             self.showingEditCourseView = true
         }) {
@@ -23,15 +23,27 @@ struct CourseView: View {
         }
     }
     
-    var editCourseView: some View {
+    private var editCourseView: some View {
         EditCourseView(course: course)
             .onDisappear { save(context: self.managedObjectContext) }
     }
     
     var body: some View {
-        NavigationHelper(destination: editCourseView, isActive: $showingEditCourseView)
-            .navigationBarTitle(course.name)
-            .navigationBarItems(trailing: editButton)
+        VStack {
+            List(course.cutoffsArray) { cutoff in
+                HStack {
+                    Text(cutoff.letter)
+                        .fontWeight(.semibold)
+                    Spacer()
+                    Text(String(cutoff.number))
+                }
+            }
+            .listStyle(GroupedListStyle())
+            
+            NavigationHelper(destination: editCourseView, isActive: $showingEditCourseView)
+        }
+        .navigationBarTitle(course.name)
+        .navigationBarItems(trailing: editButton)
     }
 }
 

@@ -12,10 +12,5 @@ import CoreData
 
 @objc(Course)
 public class Course: NSManagedObject {
-    
-    func construct(name: String) {
-        self.id = UUID()
-        self.name = name
-    }
 
 }

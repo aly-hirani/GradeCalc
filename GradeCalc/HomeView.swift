@@ -9,13 +9,13 @@
 import SwiftUI
 
 struct HomeView: View {
-    @Environment(\.managedObjectContext) var managedObjectContext
+    @Environment(\.managedObjectContext) private var managedObjectContext
     
-    @FetchRequest(fetchRequest: Course.fetchRequest()) var courses
+    @FetchRequest(entity: Course.entity(), sortDescriptors: [.init(keyPath: \Course.name, ascending: true)]) private var courses: FetchedResults<Course>
     
     @State private var showAddCourseSheet = false
     
-    var addCourseButton: some View {
+    private var addCourseButton: some View {
         Button(action: {
             self.showAddCourseSheet = true
         }) {
@@ -39,12 +39,7 @@ struct HomeView: View {
                             }
                         }
                     }
-                    .onDelete { offsets in
-                        for index in offsets {
-                            self.managedObjectContext.delete(self.courses[index])
-                        }
-                        save(context: self.managedObjectContext)
-                    }
+                    .onDelete(perform: deleteCourses)
                 }
                 addCourseButton
             }
@@ -58,6 +53,13 @@ struct HomeView: View {
     
     init() {
         UINavigationBar.appearance().largeTitleTextAttributes = [.foregroundColor: UIColor.systemTeal]
+    }
+    
+    private func deleteCourses(offsets: IndexSet) {
+        for index in offsets {
+            managedObjectContext.delete(courses[index])
+        }
+        save(context: managedObjectContext)
     }
 }
 
