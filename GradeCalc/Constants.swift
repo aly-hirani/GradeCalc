@@ -7,7 +7,11 @@
 //
 
 import Foundation
+import SwiftUI
 
 enum Constants {
-    static let letterGrades = ["A+", "A", "A-", "B+", "B", "B-", "C+", "C", "C-", "D+", "D", "D-"]
+    static let AppUIColor = UIColor.systemTeal
+    static let AppColor = Color(AppUIColor)
+    
+    static let LetterGrades = ["A+", "A", "A-", "B+", "B", "B-", "C+", "C", "C-", "D+", "D", "D-"]
 }

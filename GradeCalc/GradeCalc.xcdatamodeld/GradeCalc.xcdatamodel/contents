@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="16119" systemVersion="19E266" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="16119" systemVersion="19E287" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="Course" representedClassName="Course" syncable="YES">
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="name" optional="YES" attributeType="String"/>
-        <relationship name="cutoffs" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="GradeCutoff" inverseName="course" inverseEntity="GradeCutoff"/>
+        <relationship name="courseCutoffs" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="CourseCutoff" inverseName="course" inverseEntity="CourseCutoff"/>
     </entity>
-    <entity name="GradeCutoff" representedClassName="GradeCutoff" syncable="YES">
+    <entity name="CourseCutoff" representedClassName="CourseCutoff" syncable="YES">
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="letter" optional="YES" attributeType="String"/>
         <attribute name="number" optional="YES" attributeType="Float" defaultValueString="0" usesScalarValueType="YES"/>
-        <relationship name="course" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Course" inverseName="cutoffs" inverseEntity="Course"/>
+        <relationship name="course" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Course" inverseName="courseCutoffs" inverseEntity="Course"/>
     </entity>
     <elements>
         <element name="Course" positionX="-526.83984375" positionY="-148.4453125" width="128" height="88"/>
-        <element name="GradeCutoff" positionX="-703.171875" positionY="10.625" width="128" height="103"/>
+        <element name="CourseCutoff" positionX="-703.171875" positionY="10.625" width="128" height="103"/>
     </elements>
 </model>

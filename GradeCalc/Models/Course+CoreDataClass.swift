@@ -12,5 +12,12 @@ import CoreData
 
 @objc(Course)
 public class Course: NSManagedObject {
+    
+    static func createIn(_ moc: NSManagedObjectContext, name: String) -> Course {
+        let course = Course(context: moc)
+        course.id = UUID()
+        course.name = name
+        return course
+    }
 
 }

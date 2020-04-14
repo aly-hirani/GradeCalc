@@ -1,5 +1,5 @@
 //
-//  GradeCutoff+CoreDataProperties.swift
+//  CourseCutoff+CoreDataProperties.swift
 //  GradeCalc
 //
 //  Created by Aly Hirani on 3/30/20.
@@ -11,15 +11,12 @@ import Foundation
 import CoreData
 
 
-extension GradeCutoff: Identifiable {
-
-    @nonobjc public class func fetchRequest() -> NSFetchRequest<GradeCutoff> {
-        return NSFetchRequest<GradeCutoff>(entityName: "GradeCutoff")
-    }
+extension CourseCutoff: Identifiable {
 
     @NSManaged public var id: UUID
     @NSManaged public var letter: String
     @NSManaged public var number: Float
-    @NSManaged public var course: Course
+    
+    @NSManaged private var course: Course
 
 }

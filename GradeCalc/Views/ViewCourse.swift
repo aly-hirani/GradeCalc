@@ -1,5 +1,5 @@
 //
-//  CourseView.swift
+//  ViewCourse.swift
 //  GradeCalc
 //
 //  Created by Aly Hirani on 3/29/20.
@@ -8,39 +8,42 @@
 
 import SwiftUI
 
-struct CourseView: View {
-    @Environment(\.managedObjectContext) private var managedObjectContext
+struct ViewCourse: View {
+    @Environment(\.managedObjectContext) private var moc
     
     @ObservedObject var course: Course
     
-    @State private var showingEditCourseView = false
+    @State private var showingEditCourse = false
     
     private var editButton: some View {
         Button(action: {
-            self.showingEditCourseView = true
+            self.showingEditCourse = true
         }) {
             Text("Edit Course")
         }
     }
     
-    private var editCourseView: some View {
-        EditCourseView(course: course)
-            .onDisappear { save(context: self.managedObjectContext) }
+    private var editCourse: some View {
+        EditCourse(course: course).environment(\.managedObjectContext, self.moc)
     }
     
     var body: some View {
         VStack {
-            List(course.cutoffsArray) { cutoff in
-                HStack {
-                    Text(cutoff.letter)
-                        .fontWeight(.semibold)
-                    Spacer()
-                    Text(String(cutoff.number))
+            List {
+                ForEach(course.cutoffs) { cutoff in
+                    if !cutoff.isDeleted {
+                        HStack {
+                            Text(cutoff.letter)
+                                .fontWeight(.semibold)
+                            Spacer()
+                            Text(String(cutoff.number))
+                        }
+                    }
                 }
             }
             .listStyle(GroupedListStyle())
             
-            NavigationHelper(destination: editCourseView, isActive: $showingEditCourseView)
+            NavigationHelper(destination: editCourse, isActive: $showingEditCourse)
         }
         .navigationBarTitle(course.name)
         .navigationBarItems(trailing: editButton)

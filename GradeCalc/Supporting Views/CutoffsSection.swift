@@ -1,5 +1,5 @@
 //
-//  AddCourseCutoffsView.swift
+//  CutoffsSection.swift
 //  GradeCalc
 //
 //  Created by Aly Hirani on 3/31/20.
@@ -8,34 +8,47 @@
 
 import SwiftUI
 
-class Cutoff: ObservableObject, Identifiable {
-    @Published fileprivate var letterIndex: Int
-    @Published fileprivate var number: Float
+class Cutoff: Identifiable, Comparable {
+    fileprivate var letterIndex: Int
+    fileprivate var number: Float
     
-    func letterGrade() -> String { Constants.letterGrades[letterIndex] }
-    func numberGrade() -> Float { number }
+    var letterGrade: String { Constants.LetterGrades[letterIndex] }
+    var numberGrade: Float { number }
     
-    fileprivate init(letterIndex: Int, number: Float) {
+    init(letterIndex: Int, number: Float) {
         self.letterIndex = letterIndex
         self.number = number
     }
+    
+    static func < (a: Cutoff, b: Cutoff) -> Bool {
+        a.letterIndex < b.letterIndex
+    }
+    
+    static func == (a: Cutoff, b: Cutoff) -> Bool {
+        a.letterIndex == b.letterIndex && a.number == b.number
+    }
 }
 
-struct AddCourseCutoffsView: View {
-    @Binding var cutoffs: [Cutoff]
+struct CutoffsSection: View {
+    @Binding private var cutoffs: [Cutoff]
     
-    @State private var letterIndicesLeft = [Int](Constants.letterGrades.indices)
+    @State private var letterIndicesLeft: [Int]
     
     private var addCutoffButton: some View {
         Button(action: addCutoff, label: { Text("Add Grade Cutoff") })
     }
     
+    init(_ cutoffs: Binding<[Cutoff]>) {
+        _cutoffs = cutoffs
+        _letterIndicesLeft = State(initialValue: {
+            Set(Constants.LetterGrades.indices).subtracting(cutoffs.wrappedValue.map { c in c.letterIndex }).sorted()
+        }())
+    }
+    
     var body: some View {
         List {
-            ForEach(cutoffs) { cutoff in
-                CutoffView(cutoff, indices: self.$letterIndicesLeft) {
-                    self.cutoffs.sort { a, b in a.letterIndex < b.letterIndex }
-                }
+            ForEach(cutoffs.sorted()) { cutoff in
+                CutoffView(cutoff, indices: self.$letterIndicesLeft)
             }
             .onDelete(perform: deleteCutoffs)
             if !letterIndicesLeft.isEmpty {
@@ -48,7 +61,6 @@ struct AddCourseCutoffsView: View {
         let nextInd = letterIndicesLeft.remove(at: 0)
         let prevNum = nextInd == 0 ? 100 : cutoffs[nextInd - 1].number
         cutoffs.append(Cutoff(letterIndex: nextInd, number: prevNum - 5))
-        cutoffs.sort { a, b in a.letterIndex < b.letterIndex }
     }
     
     private func deleteCutoffs(offsets: IndexSet) {
@@ -61,11 +73,9 @@ struct AddCourseCutoffsView: View {
 }
 
 private struct CutoffView: View {
-    @ObservedObject var cutoff: Cutoff
+    var cutoff: Cutoff
     
     @Binding var letterIndicesLeft: [Int]
-    
-    var onIndexChange: () -> Void
     
     @State var selectedIndex: Int
     @State var numberEntered: String
@@ -75,24 +85,23 @@ private struct CutoffView: View {
     
     var currentIndices: [Int] { (letterIndicesLeft + [cutoff.letterIndex]).sorted() }
     
-    init(_ c: Cutoff, indices: Binding<[Int]>, onIndexChange perform: @escaping () -> Void) {
+    init(_ c: Cutoff, indices: Binding<[Int]>) {
         cutoff = c
         _letterIndicesLeft = indices
         _selectedIndex = State(initialValue: c.letterIndex)
         _numberEntered = State(initialValue: String(c.number))
-        onIndexChange = perform
     }
     
     var doneButton: some View {
         Button(action: saveChanges, label: { Text("Done") })
     }
     
-    var editCutoffView: some View {
+    var editCutoff: some View {
         Form {
             Section(header: Text("Letter Grade")) {
                 Picker("Select from the following", selection: $selectedIndex) {
                     ForEach(currentIndices, id: \.self) { i in
-                        Text(Constants.letterGrades[i])
+                        Text(Constants.LetterGrades[i])
                     }
                 }
                 .pickerStyle(WheelPickerStyle())
@@ -108,7 +117,7 @@ private struct CutoffView: View {
         .navigationBarTitle("Edit Cutoff")
         .navigationBarItems(trailing: doneButton)
         .alert(isPresented: $showingAlert) {
-            Alert(title: Text("Error"), message: Text("Please enter a valid number"), dismissButton: .cancel(Text("Dismiss")))
+            Alert(title: Text("Error"), message: Text("Please enter a valid number"))
         }
         .onDisappear {
             self.selectedIndex = self.cutoff.letterIndex
@@ -117,9 +126,9 @@ private struct CutoffView: View {
     }
     
     var body: some View {
-        NavigationLink(destination: editCutoffView, isActive: $showingEditForm) {
+        NavigationLink(destination: editCutoff, isActive: $showingEditForm) {
             HStack {
-                Text(Constants.letterGrades[cutoff.letterIndex])
+                Text(Constants.LetterGrades[cutoff.letterIndex]).bold()
                 Spacer()
                 Text(String(cutoff.number))
             }
@@ -127,18 +136,18 @@ private struct CutoffView: View {
     }
     
     func saveChanges() {
-        if let number = Float(numberEntered) {
-            cutoff.number = number
-            if cutoff.letterIndex != selectedIndex {
-                letterIndicesLeft = currentIndices
-                letterIndicesLeft.removeAll { i in i == selectedIndex }
-                cutoff.letterIndex = selectedIndex
-                onIndexChange()
-            }
-            showingEditForm = false
-        } else {
+        guard let number = Float(numberEntered) else {
             numberEntered = String(cutoff.number)
             showingAlert = true
+            return
         }
+        
+        cutoff.number = number
+        if cutoff.letterIndex != selectedIndex {
+            letterIndicesLeft = currentIndices
+            letterIndicesLeft.removeAll { i in i == selectedIndex }
+            cutoff.letterIndex = selectedIndex
+        }
+        showingEditForm = false
     }
 }
