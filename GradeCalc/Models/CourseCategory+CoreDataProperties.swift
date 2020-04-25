@@ -16,8 +16,8 @@ extension CourseCategory: Identifiable {
     @NSManaged public var id: UUID
     @NSManaged public var type: String
     @NSManaged public var weight: Float
-    @NSManaged public var count: Int64
+    @NSManaged public var count: Int
     
-    @NSManaged public var course: Course
+    @NSManaged private var course: Course
 
 }
