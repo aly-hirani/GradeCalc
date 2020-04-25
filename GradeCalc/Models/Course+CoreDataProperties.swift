@@ -17,6 +17,7 @@ extension Course: Identifiable {
     @NSManaged public var name: String
     
     @NSManaged private var courseCutoffs: NSSet
+    @NSManaged private var courseCategories: NSSet
 
     public var cutoffs: [CourseCutoff] {
         let set = courseCutoffs as? Set<CourseCutoff> ?? []
@@ -25,6 +26,11 @@ extension Course: Identifiable {
             let bInd = Constants.LetterGrades.firstIndex(of: b.letter) ?? Int.max
             return aInd < bInd
         }
+    }
+    
+    public var categories: [CourseCategory] {
+        let set = courseCategories as? Set<CourseCategory> ?? []
+        return set.sorted { a, b in a.type < b.type }
     }
 
 }
@@ -35,4 +41,12 @@ extension Course {
     @objc(addCourseCutoffsObject:)
     @NSManaged public func addToCourseCutoffs(_ value: CourseCutoff)
 
+}
+
+// MARK: Generated accessors for courseCategories
+extension Course {
+
+    @objc(addCourseCategoriesObject:)
+    @NSManaged public func addToCourseCategories(_ value: CourseCategory)
+    
 }

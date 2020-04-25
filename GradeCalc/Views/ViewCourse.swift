@@ -19,7 +19,7 @@ struct ViewCourse: View {
         Button(action: {
             self.showingEditCourse = true
         }) {
-            Text("Edit Course")
+            Text("Edit Course").bold()
         }
     }
     
@@ -30,13 +30,29 @@ struct ViewCourse: View {
     var body: some View {
         VStack {
             List {
+                Text("Course Cutoffs")
+                    .fontWeight(.heavy)
+                    .frame(maxWidth: .infinity)
                 ForEach(course.cutoffs) { cutoff in
                     if !cutoff.isDeleted {
                         HStack {
-                            Text(cutoff.letter)
-                                .fontWeight(.semibold)
+                            Text(cutoff.letter).bold()
                             Spacer()
                             Text(String(cutoff.number))
+                        }
+                    }
+                }
+                
+                Text("Course Categories")
+                    .fontWeight(.heavy)
+                    .frame(maxWidth: .infinity)
+                ForEach(course.categories) { category in
+                    if !category.isDeleted {
+                        HStack {
+                            Text(category.type + ":").bold()
+                            Text(String(category.count))
+                            Spacer()
+                            Text(String(format: "%.2f%% each", category.weight / Float(category.count)))
                         }
                     }
                 }

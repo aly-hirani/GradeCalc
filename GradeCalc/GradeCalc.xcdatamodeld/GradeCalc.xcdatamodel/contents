@@ -3,7 +3,15 @@
     <entity name="Course" representedClassName="Course" syncable="YES">
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="name" optional="YES" attributeType="String"/>
+        <relationship name="courseCategories" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="CourseCategory" inverseName="course" inverseEntity="CourseCategory"/>
         <relationship name="courseCutoffs" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="CourseCutoff" inverseName="course" inverseEntity="CourseCutoff"/>
+    </entity>
+    <entity name="CourseCategory" representedClassName="CourseCategory" syncable="YES">
+        <attribute name="count" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="type" optional="YES" attributeType="String"/>
+        <attribute name="weight" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <relationship name="course" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Course" inverseName="courseCategories" inverseEntity="Course"/>
     </entity>
     <entity name="CourseCutoff" representedClassName="CourseCutoff" syncable="YES">
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
@@ -12,7 +20,8 @@
         <relationship name="course" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Course" inverseName="courseCutoffs" inverseEntity="Course"/>
     </entity>
     <elements>
-        <element name="Course" positionX="-526.83984375" positionY="-148.4453125" width="128" height="88"/>
+        <element name="Course" positionX="-526.83984375" positionY="-148.4453125" width="128" height="103"/>
         <element name="CourseCutoff" positionX="-703.171875" positionY="10.625" width="128" height="103"/>
+        <element name="CourseCategory" positionX="-612" positionY="-27" width="128" height="118"/>
     </elements>
 </model>

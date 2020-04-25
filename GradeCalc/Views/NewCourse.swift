@@ -13,15 +13,18 @@ struct NewCourse: View {
     
     var body: some View {
         NavigationView {
-            CourseDetailsForm(name: "", cutoffs: [], saveChanges: saveChanges)
+            CourseDetailsForm(name: "", cutoffs: [], categories: [], saveChanges: saveChanges)
                 .navigationBarTitle("New Course")
         }
     }
     
-    private func saveChanges(name: String, cutoffs: [Cutoff]) {
+    private func saveChanges(name: String, cutoffs: [Cutoff], categories: [Category]) {
         let course = Course.createIn(moc, name: name)
         for c in cutoffs {
             course.addToCourseCutoffs(.createIn(moc, letter: c.letterGrade, number: c.numberGrade))
+        }
+        for c in categories {
+            course.addToCourseCategories(.createIn(moc, type: c.type, weight: c.weight, count: c.count))
         }
         save(context: moc)
     }

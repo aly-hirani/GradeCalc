@@ -23,9 +23,12 @@
 		4079D95F242DA1D100783454 /* NewCourse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4079D95E242DA1D100783454 /* NewCourse.swift */; };
 		407C23E3243145A000422AD8 /* ViewCourse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 407C23E2243145A000422AD8 /* ViewCourse.swift */; };
 		407C23E52431581F00422AD8 /* EditCourse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 407C23E42431581F00422AD8 /* EditCourse.swift */; };
+		40A5CAF6244BD5ED00181DDA /* CategoriesSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40A5CAF5244BD5ED00181DDA /* CategoriesSection.swift */; };
 		40CA3A412430050000D1FF15 /* Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40CA3A402430050000D1FF15 /* Data.swift */; };
 		40DA6CCC244A64530027D714 /* CourseDetailsForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40DA6CCB244A64530027D714 /* CourseDetailsForm.swift */; };
 		40DBD8BA2433C78400D68677 /* CutoffsSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40DBD8B92433C78400D68677 /* CutoffsSection.swift */; };
+		40E7F2B4244D6DE300312978 /* CourseCategory+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40E7F2B0244D6DE200312978 /* CourseCategory+CoreDataClass.swift */; };
+		40E7F2B5244D6DE300312978 /* CourseCategory+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40E7F2B1244D6DE200312978 /* CourseCategory+CoreDataProperties.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -59,9 +62,12 @@
 		4079D95E242DA1D100783454 /* NewCourse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewCourse.swift; sourceTree = "<group>"; };
 		407C23E2243145A000422AD8 /* ViewCourse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewCourse.swift; sourceTree = "<group>"; };
 		407C23E42431581F00422AD8 /* EditCourse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditCourse.swift; sourceTree = "<group>"; };
+		40A5CAF5244BD5ED00181DDA /* CategoriesSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoriesSection.swift; sourceTree = "<group>"; };
 		40CA3A402430050000D1FF15 /* Data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Data.swift; sourceTree = "<group>"; };
 		40DA6CCB244A64530027D714 /* CourseDetailsForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseDetailsForm.swift; sourceTree = "<group>"; };
 		40DBD8B92433C78400D68677 /* CutoffsSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CutoffsSection.swift; sourceTree = "<group>"; };
+		40E7F2B0244D6DE200312978 /* CourseCategory+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CourseCategory+CoreDataClass.swift"; sourceTree = "<group>"; };
+		40E7F2B1244D6DE200312978 /* CourseCategory+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CourseCategory+CoreDataProperties.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -144,6 +150,8 @@
 				4056E74F2432FCDD00111365 /* Course+CoreDataProperties.swift */,
 				4056E7542432FD8D00111365 /* CourseCutoff+CoreDataClass.swift */,
 				4056E7552432FD8D00111365 /* CourseCutoff+CoreDataProperties.swift */,
+				40E7F2B0244D6DE200312978 /* CourseCategory+CoreDataClass.swift */,
+				40E7F2B1244D6DE200312978 /* CourseCategory+CoreDataProperties.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -163,6 +171,7 @@
 			children = (
 				40DA6CCB244A64530027D714 /* CourseDetailsForm.swift */,
 				40DBD8B92433C78400D68677 /* CutoffsSection.swift */,
+				40A5CAF5244BD5ED00181DDA /* CategoriesSection.swift */,
 			);
 			path = "Supporting Views";
 			sourceTree = "<group>";
@@ -275,12 +284,15 @@
 				4079D93B242D97A600783454 /* GradeCalc.xcdatamodeld in Sources */,
 				4056E7592432FD8D00111365 /* CourseCutoff+CoreDataProperties.swift in Sources */,
 				4079D95F242DA1D100783454 /* NewCourse.swift in Sources */,
+				40E7F2B5244D6DE300312978 /* CourseCategory+CoreDataProperties.swift in Sources */,
 				4079D93D242D97A600783454 /* Home.swift in Sources */,
+				40E7F2B4244D6DE300312978 /* CourseCategory+CoreDataClass.swift in Sources */,
 				4056E7512432FCDD00111365 /* Course+CoreDataProperties.swift in Sources */,
 				407C23E52431581F00422AD8 /* EditCourse.swift in Sources */,
 				4079D938242D97A600783454 /* SceneDelegate.swift in Sources */,
 				40538AB824380F59002F5B38 /* Constants.swift in Sources */,
 				40DA6CCC244A64530027D714 /* CourseDetailsForm.swift in Sources */,
+				40A5CAF6244BD5ED00181DDA /* CategoriesSection.swift in Sources */,
 				4056E7582432FD8D00111365 /* CourseCutoff+CoreDataClass.swift in Sources */,
 				40CA3A412430050000D1FF15 /* Data.swift in Sources */,
 			);

@@ -35,7 +35,7 @@ struct CutoffsSection: View {
     @State private var letterIndicesLeft: [Int]
     
     private var addCutoffButton: some View {
-        Button(action: addCutoff, label: { Text("Add Grade Cutoff") })
+        Button(action: addCutoff, label: { Text("Add Grade Cutoff").bold() })
     }
     
     init(_ cutoffs: Binding<[Cutoff]>) {
@@ -47,8 +47,10 @@ struct CutoffsSection: View {
     
     var body: some View {
         List {
-            ForEach(cutoffs.sorted()) { cutoff in
-                CutoffView(cutoff, indices: self.$letterIndicesLeft)
+            ForEach(cutoffs) { cutoff in
+                CutoffView(cutoff, indices: self.$letterIndicesLeft) {
+                    self.cutoffs.sort()
+                }
             }
             .onDelete(perform: deleteCutoffs)
             if !letterIndicesLeft.isEmpty {
@@ -61,12 +63,11 @@ struct CutoffsSection: View {
         let nextInd = letterIndicesLeft.remove(at: 0)
         let prevNum = nextInd == 0 ? 100 : cutoffs[nextInd - 1].number
         cutoffs.append(Cutoff(letterIndex: nextInd, number: prevNum - 5))
+        cutoffs.sort()
     }
     
     private func deleteCutoffs(offsets: IndexSet) {
-        for index in offsets {
-            letterIndicesLeft.append(cutoffs[index].letterIndex)
-        }
+        letterIndicesLeft += offsets.map { i in cutoffs[i].letterIndex }
         letterIndicesLeft.sort()
         cutoffs.remove(atOffsets: offsets)
     }
@@ -80,20 +81,23 @@ private struct CutoffView: View {
     @State var selectedIndex: Int
     @State var numberEntered: String
     
+    var doneEditing: () -> Void
+    
     @State var showingEditForm = false
     @State var showingAlert = false
     
     var currentIndices: [Int] { (letterIndicesLeft + [cutoff.letterIndex]).sorted() }
     
-    init(_ c: Cutoff, indices: Binding<[Int]>) {
+    init(_ c: Cutoff, indices: Binding<[Int]>, doneEditing: @escaping () -> Void) {
         cutoff = c
         _letterIndicesLeft = indices
         _selectedIndex = State(initialValue: c.letterIndex)
         _numberEntered = State(initialValue: String(c.number))
+        self.doneEditing = doneEditing
     }
     
     var doneButton: some View {
-        Button(action: saveChanges, label: { Text("Done") })
+        Button(action: saveChanges, label: { Text("Done").bold() })
     }
     
     var editCutoff: some View {
@@ -148,6 +152,9 @@ private struct CutoffView: View {
             letterIndicesLeft.removeAll { i in i == selectedIndex }
             cutoff.letterIndex = selectedIndex
         }
+        
+        doneEditing()
+        
         showingEditForm = false
     }
 }

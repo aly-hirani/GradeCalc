@@ -14,21 +14,29 @@ struct EditCourse: View {
     @ObservedObject var course: Course
     
     var body: some View {
-        CourseDetailsForm(name: course.name, cutoffs: cutoffsIn(course), saveChanges: saveChanges)
+        CourseDetailsForm(name: course.name, cutoffs: cutoffsIn(course), categories: categoriesIn(course), saveChanges: saveChanges)
             .navigationBarTitle("Edit Course")
     }
     
-    private func saveChanges(name: String, cutoffs: [Cutoff]) {
+    private func saveChanges(name: String, cutoffs: [Cutoff], categories: [Category]) {
         if name != course.name {
             course.objectWillChange.send()
             course.name = name
         }
         
-        if cutoffs != cutoffsIn(course) {
+        if cutoffs.sorted() != cutoffsIn(course) {
             course.objectWillChange.send()
             course.cutoffs.forEach { c in moc.delete(c) }
             for c in cutoffs {
                 course.addToCourseCutoffs(.createIn(moc, letter: c.letterGrade, number: c.numberGrade))
+            }
+        }
+        
+        if categories.sorted() != categoriesIn(course) {
+            course.objectWillChange.send()
+            course.categories.forEach { c in moc.delete(c) }
+            for c in categories {
+                course.addToCourseCategories(.createIn(moc, type: c.type, weight: c.weight, count: c.count))
             }
         }
         
@@ -40,5 +48,9 @@ struct EditCourse: View {
             guard let ind = Constants.LetterGrades.firstIndex(of: g.letter) else { return nil }
             return Cutoff(letterIndex: ind, number: g.number)
         }
+    }
+    
+    private func categoriesIn(_ course: Course) -> [Category] {
+        course.categories.map { c in Category(type: c.type, weight: c.weight, count: Int(c.count)) }
     }
 }
