@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="16119" systemVersion="19E287" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="CategoryGrade" representedClassName="CategoryGrade" syncable="YES">
+        <attribute name="grade" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="index" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <relationship name="category" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CourseCategory" inverseName="categoryGrades" inverseEntity="CourseCategory"/>
+    </entity>
     <entity name="Course" representedClassName="Course" syncable="YES">
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="name" optional="YES" attributeType="String"/>
@@ -11,6 +16,7 @@
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="type" optional="YES" attributeType="String"/>
         <attribute name="weight" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <relationship name="categoryGrades" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="CategoryGrade" inverseName="category" inverseEntity="CategoryGrade"/>
         <relationship name="course" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Course" inverseName="courseCategories" inverseEntity="Course"/>
     </entity>
     <entity name="CourseCutoff" representedClassName="CourseCutoff" syncable="YES">
@@ -21,7 +27,8 @@
     </entity>
     <elements>
         <element name="Course" positionX="-526.83984375" positionY="-148.4453125" width="128" height="103"/>
+        <element name="CourseCategory" positionX="-612" positionY="-27" width="128" height="133"/>
         <element name="CourseCutoff" positionX="-703.171875" positionY="10.625" width="128" height="103"/>
-        <element name="CourseCategory" positionX="-612" positionY="-27" width="128" height="118"/>
+        <element name="CategoryGrade" positionX="-612" positionY="-27" width="128" height="88"/>
     </elements>
 </model>

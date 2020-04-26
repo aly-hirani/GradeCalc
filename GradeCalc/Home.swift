@@ -36,7 +36,7 @@ struct Home: View {
                         ForEach(courses) { course in
                             if !course.isDeleted {
                                 NavigationLink(destination: ViewCourse(course: course)) {
-                                    Text(course.name)
+                                    Text(course.name).fontWeight(.medium)
                                 }
                             }
                         }

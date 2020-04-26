@@ -15,3 +15,17 @@ enum Constants {
     
     static let LetterGrades = ["A+", "A", "A-", "B+", "B", "B-", "C+", "C", "C-", "D+", "D", "D-"]
 }
+
+struct NavigationHelper<Destination: View>: View {
+    var destination: Destination
+    var isActive: Binding<Bool>
+    
+    var body: some View {
+        NavigationLink(destination: destination, isActive: isActive) {
+            EmptyView()
+        }
+        .frame(width: 0, height: 0)
+        .disabled(true)
+        .hidden()
+    }
+}
