@@ -463,6 +463,7 @@
 				DEVELOPMENT_TEAM = V68K89W9U5;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = GradeCalc/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -483,6 +484,7 @@
 				DEVELOPMENT_TEAM = V68K89W9U5;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = GradeCalc/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
