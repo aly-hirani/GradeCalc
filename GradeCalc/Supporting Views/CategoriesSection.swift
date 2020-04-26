@@ -9,13 +9,16 @@
 import SwiftUI
 
 class Category: Identifiable, Comparable {
+    let id: UUID
+    
     fileprivate(set) var type: String
     fileprivate(set) var weight: Float
     fileprivate(set) var count: Int
     
     fileprivate var averageWeight: Float { weight / Float(count) }
     
-    init(type: String, weight: Float, count: Int) {
+    init(id: UUID = UUID(), type: String, weight: Float, count: Int) {
+        self.id = id
         self.type = type
         self.weight = weight
         self.count = count

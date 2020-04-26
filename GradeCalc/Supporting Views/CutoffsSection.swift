@@ -9,13 +9,16 @@
 import SwiftUI
 
 class Cutoff: Identifiable, Comparable {
+    let id: UUID
+    
     fileprivate var letterIndex: Int
     fileprivate var number: Float
     
     var letterGrade: String { Constants.LetterGrades[letterIndex] }
     var numberGrade: Float { number }
     
-    init(letterIndex: Int, number: Float) {
+    init(id: UUID = UUID(), letterIndex: Int, number: Float) {
+        self.id = id
         self.letterIndex = letterIndex
         self.number = number
     }

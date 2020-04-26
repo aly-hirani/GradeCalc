@@ -18,7 +18,7 @@ public class CourseCategory: NSManagedObject {
         courseCategory.id = UUID()
         courseCategory.type = type
         courseCategory.weight = weight
-        courseCategory.count = Int64(count)
+        courseCategory.count = count
         return courseCategory
     }
 

@@ -14,68 +14,80 @@ struct ViewCourse: View {
     @ObservedObject var course: Course
     
     @State private var showingEditCourse = false
+    @State private var showingCalculations = false
     
     private var editButton: some View {
         Button(action: {
             self.showingEditCourse = true
         }) {
-            Text("Edit Course").bold()
+            Text("Edit").bold()
+        }
+    }
+    
+    private var calculateButton: some View {
+        Button(action: {
+            self.showingCalculations = true
+        }) {
+            Text("Calculate my Grades").bold().frame(maxWidth: .infinity)
         }
     }
     
     private var editCourse: some View {
-        EditCourse(course: course).environment(\.managedObjectContext, self.moc)
+        EditCourse(course: course).environment(\.managedObjectContext, moc)
     }
     
     var body: some View {
         VStack {
-            List {
-                Text("Course Cutoffs")
-                    .fontWeight(.heavy)
-                    .frame(maxWidth: .infinity)
-                ForEach(course.cutoffs) { cutoff in
-                    if !cutoff.isDeleted {
-                        HStack {
-                            Text(cutoff.letter).bold()
-                            Spacer()
-                            Text(String(cutoff.number))
-                        }
-                    }
-                }
+            Form {
+                calculateButton
                 
-                Text("Course Categories")
-                    .fontWeight(.heavy)
-                    .frame(maxWidth: .infinity)
                 ForEach(course.categories) { category in
                     if !category.isDeleted {
-                        HStack {
-                            Text(category.type + ":").bold()
-                            Text(String(category.count))
-                            Spacer()
-                            Text(String(format: "%.2f%% each", category.weight / Float(category.count)))
-                        }
+                        EditGrades(category: category).environment(\.managedObjectContext, self.moc)
                     }
                 }
             }
-            .listStyle(GroupedListStyle())
             
             NavigationHelper(destination: editCourse, isActive: $showingEditCourse)
+            NavigationHelper(destination: Calculations(course: course), isActive: $showingCalculations)
         }
         .navigationBarTitle(course.name)
         .navigationBarItems(trailing: editButton)
     }
 }
 
-private struct NavigationHelper<Destination: View>: View {
-    var destination: Destination
-    var isActive: Binding<Bool>
+private struct Calculations: View {
+    @ObservedObject var course: Course
     
     var body: some View {
-        NavigationLink(destination: destination, isActive: isActive) {
-            EmptyView()
+        var accumulatedPoints: Float = 0
+        var accumulatedWeight: Float = 0
+        var totalWeight: Float = 0
+        
+        for c in course.categories {
+            let individualWeight = c.weight / Float(c.count)
+            for g in c.grades {
+                accumulatedPoints += (g.grade / 100) * individualWeight
+            }
+            accumulatedWeight += individualWeight * Float(c.grades.count)
+            totalWeight += c.weight
         }
-        .frame(width: 0, height: 0)
-        .disabled(true)
-        .hidden()
+        
+        let calc: (Float) -> Float = { n in
+            let remainingPoints = (n / 100) * totalWeight - accumulatedPoints
+            let remainingWeight = totalWeight - accumulatedWeight
+            return remainingPoints / remainingWeight * 100
+        }
+        
+        return Form {
+            ForEach(course.cutoffs) { cutoff in
+                HStack {
+                    Text(cutoff.letter).bold()
+                    Spacer()
+                    Text(String(format: "%.2f%%", calc(cutoff.number)))
+                }
+            }
+        }
+        .navigationBarTitle("Calculations")
     }
 }
