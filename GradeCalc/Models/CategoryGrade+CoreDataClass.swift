@@ -13,10 +13,11 @@ import CoreData
 @objc(CategoryGrade)
 public class CategoryGrade: NSManagedObject {
     
-    static func createIn(_ moc: NSManagedObjectContext, index: Int, grade: Float) -> CategoryGrade {
+    static func createIn(_ moc: NSManagedObjectContext, index: Int, earned: Float, possible: Float) -> CategoryGrade {
         let categoryGrade = CategoryGrade(context: moc)
         categoryGrade.index = index
-        categoryGrade.grade = grade
+        categoryGrade.pointsEarned = earned
+        categoryGrade.pointsPossible = possible
         return categoryGrade
     }
 

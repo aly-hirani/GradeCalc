@@ -117,8 +117,15 @@ private struct CutoffView: View {
             }
             
             Section(header: Text("Number Grade")) {
-                TextField("Enter number here", text: $numberEntered)
-                    .keyboardType(.decimalPad)
+                HStack {
+                    Spacer()
+                    TextField("100.0", text: $numberEntered)
+                        .keyboardType(.decimalPad)
+                        .multilineTextAlignment(.trailing)
+                    Text("%")
+                        .foregroundColor(numberEntered.isEmpty ? .secondary : .primary)
+                        .padding(.leading, -5)
+                }
             }
         }
         .navigationBarTitle("Edit Cutoff")
@@ -137,7 +144,7 @@ private struct CutoffView: View {
             HStack {
                 Text(Constants.LetterGrades[cutoff.letterIndex]).bold()
                 Spacer()
-                Text(String(cutoff.number))
+                Text(String(cutoff.number) + "%")
             }
         }
     }

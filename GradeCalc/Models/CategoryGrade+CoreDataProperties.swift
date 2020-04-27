@@ -14,7 +14,8 @@ import CoreData
 extension CategoryGrade {
 
     @NSManaged public var index: Int
-    @NSManaged public var grade: Float
+    @NSManaged public var pointsEarned: Float
+    @NSManaged public var pointsPossible: Float
     
     @NSManaged private var category: CourseCategory
 
