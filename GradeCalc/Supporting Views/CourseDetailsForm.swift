@@ -20,9 +20,17 @@ struct CourseDetailsForm: View {
     @State private var showingNameAlert = false
     @State private var showingCutoffsAlert = false
     @State private var showingCategoriesAlert = false
+    @State private var showingWeightAlert = false
     
     private var doneButton: some View {
         Button(action: donePressed, label: { Text("Done").bold() })
+    }
+    
+    private var weightErrorOptions: [ActionSheet.Button] {
+        let refactor = ActionSheet.Button.default(Text("Refactor Weights"), action: refactorWeights)
+        let save = ActionSheet.Button.default(Text("Save Anyways"), action: saveAndReturn)
+        let cancel = ActionSheet.Button.cancel()
+        return [refactor, save, cancel]
     }
     
     var body: some View {
@@ -49,6 +57,9 @@ struct CourseDetailsForm: View {
             }
         }
         .navigationBarItems(trailing: doneButton)
+        .actionSheet(isPresented: $showingWeightAlert) {
+            ActionSheet(title: Text("Total Weight is not 100"), buttons: weightErrorOptions)
+        }
     }
     
     private func donePressed() {
@@ -67,6 +78,22 @@ struct CourseDetailsForm: View {
             return
         }
         
+        let totalWeight = categories.reduce(0, { r, c in r + c.weight })
+        guard (totalWeight * 100).rounded() / 100 == 100 else {
+            showingWeightAlert = true
+            return
+        }
+        
+        saveAndReturn()
+    }
+    
+    private func refactorWeights() {
+        let totalWeight = categories.reduce(0, { r, c in r + c.weight })
+        categories.forEach { c in c.refactorWeight(totalCourseWeight: totalWeight) }
+        saveAndReturn()
+    }
+    
+    private func saveAndReturn() {
         saveChanges(name, cutoffs, categories)
         presentationMode.wrappedValue.dismiss()
     }

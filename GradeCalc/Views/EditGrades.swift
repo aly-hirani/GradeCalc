@@ -10,11 +10,13 @@ import SwiftUI
 
 private class Grade: Identifiable {
     let index: Int
-    var entry: String
+    var earned: String
+    var possible: String
     
-    init(index: Int, entry: String) {
+    init(index: Int, earned: String, possible: String) {
         self.index = index
-        self.entry = entry
+        self.earned = earned
+        self.possible = possible
     }
 }
 
@@ -27,11 +29,11 @@ struct EditGrades: View {
     
     @State private var showingEditGrades = false
     
-    private var gradeNumbers: [Float?] {
-        var grades = [Float?](repeating: nil, count: category.count)
+    private var gradeNumbers: [(e: Float, p: Float)?] {
+        var grades = [(e: Float, p: Float)?](repeating: nil, count: category.count)
         for g in category.grades {
             if grades.startIndex <= g.index && g.index < grades.endIndex {
-                grades[g.index] = g.grade
+                grades[g.index] = (g.pointsEarned, g.pointsPossible)
             } else {
                 moc.delete(g)
                 save(context: moc)
@@ -41,11 +43,11 @@ struct EditGrades: View {
     }
     
     private var grades: [Grade] {
-        gradeNumbers.enumerated().map { index, grade in
-            if let grade = grade {
-                return Grade(index: index, entry: String(grade))
+        gradeNumbers.enumerated().map { i, g in
+            if let g = g {
+                return Grade(index: i, earned: String(g.e), possible: String(g.p))
             } else {
-                return Grade(index: index, entry: "")
+                return Grade(index: i, earned: "", possible: String(100.0))
             }
         }
     }
@@ -69,13 +71,23 @@ struct EditGrades: View {
     private var editGrades: some View {
         Form {
             ForEach(gradesEntered) { g in
-                HStack {
-                    Text("#\(g.index + 1)").bold()
-                    Spacer()
-                    TextField("100.0", text: .init(get: { g.entry }, set: { e in g.entry = e }))
-                        .keyboardType(.decimalPad)
-                        .multilineTextAlignment(.trailing)
-                        .frame(maxHeight: .infinity)
+                Section(header: Text("#\(g.index + 1)")) {
+                    HStack {
+                        Text("Points Earned").bold()
+                        Spacer()
+                        TextField("100.0", text: .init(get: { g.earned }, set: { e in g.earned = e }))
+                            .keyboardType(.decimalPad)
+                            .multilineTextAlignment(.trailing)
+                            .frame(maxHeight: .infinity)
+                    }
+                    HStack {
+                        Text("Points Possible").bold()
+                        Spacer()
+                        TextField("100.0", text: .init(get: { g.possible }, set: { p in g.possible = p }))
+                            .keyboardType(.decimalPad)
+                            .multilineTextAlignment(.trailing)
+                            .frame(maxHeight: .infinity)
+                    }
                 }
             }
         }
@@ -84,7 +96,10 @@ struct EditGrades: View {
     }
     
     var body: some View {
-        let grades = gradeNumbers.compactMap { g in g }
+        let grades: [Float] = gradeNumbers.compactMap { grade in
+            guard let grade = grade else { return nil }
+            return grade.e / grade.p * 100
+        }
         let average = grades.reduce(0, +) / Float(grades.count)
         
         return Section(header: Text(category.type)) {
@@ -114,8 +129,9 @@ struct EditGrades: View {
         }
         
         for g in gradesEntered {
-            if let grade = Float(g.entry) {
-                category.addToCategoryGrades(.createIn(moc, index: g.index, grade: grade))
+            if let earned = Float(g.earned) {
+                let possible = Float(g.possible) ?? 100
+                category.addToCategoryGrades(.createIn(moc, index: g.index, earned: earned, possible: possible))
             }
         }
         

@@ -28,7 +28,7 @@ struct ViewCourse: View {
         Button(action: {
             self.showingCalculations = true
         }) {
-            Text("Calculate my Grades").bold().frame(maxWidth: .infinity)
+            Text("Calculate").bold().frame(maxWidth: .infinity)
         }
     }
     
@@ -53,41 +53,5 @@ struct ViewCourse: View {
         }
         .navigationBarTitle(course.name)
         .navigationBarItems(trailing: editButton)
-    }
-}
-
-private struct Calculations: View {
-    @ObservedObject var course: Course
-    
-    var body: some View {
-        var accumulatedPoints: Float = 0
-        var accumulatedWeight: Float = 0
-        var totalWeight: Float = 0
-        
-        for c in course.categories {
-            let individualWeight = c.weight / Float(c.count)
-            for g in c.grades {
-                accumulatedPoints += (g.grade / 100) * individualWeight
-            }
-            accumulatedWeight += individualWeight * Float(c.grades.count)
-            totalWeight += c.weight
-        }
-        
-        let calc: (Float) -> Float = { n in
-            let remainingPoints = (n / 100) * totalWeight - accumulatedPoints
-            let remainingWeight = totalWeight - accumulatedWeight
-            return remainingPoints / remainingWeight * 100
-        }
-        
-        return Form {
-            ForEach(course.cutoffs) { cutoff in
-                HStack {
-                    Text(cutoff.letter).bold()
-                    Spacer()
-                    Text(String(format: "%.2f%%", calc(cutoff.number)))
-                }
-            }
-        }
-        .navigationBarTitle("Calculations")
     }
 }

@@ -15,13 +15,15 @@ class Category: Identifiable, Comparable {
     fileprivate(set) var weight: Float
     fileprivate(set) var count: Int
     
-    fileprivate var averageWeight: Float { weight / Float(count) }
-    
     init(id: UUID = UUID(), type: String, weight: Float, count: Int) {
         self.id = id
         self.type = type
         self.weight = weight
         self.count = count
+    }
+    
+    func refactorWeight(totalCourseWeight: Float) {
+        weight = weight / totalCourseWeight * 100
     }
     
     static func < (a: Category, b: Category) -> Bool {
@@ -52,6 +54,12 @@ struct CategoriesSection: View {
                 }
             }
             .onDelete { o in self.categories.remove(atOffsets: o) }
+
+            HStack {
+                Text("Total Current Weight").bold()
+                Spacer()
+                Text(String(format: "%.2f", categories.reduce(0, { r, c in r + c.weight }))).bold()
+            }
             
             addCategoryButton
         }
@@ -79,7 +87,7 @@ private struct CategoryView: View {
     init(_ c: Category, doneEditing: @escaping () -> Void) {
         category = c
         _type = State(initialValue: c.type)
-        _weight = State(initialValue: String(c.weight))
+        _weight = State(initialValue: String(format: "%.2f", c.weight))
         _count = State(initialValue: c.count)
         self.doneEditing = doneEditing
     }
@@ -92,8 +100,8 @@ private struct CategoryView: View {
         Form {
             Section(header: Text("Category Details")) {
                 HStack {
-                    Text("Type")
-                    TextField("Quizzes", text: $type)
+                    Text("Type").bold()
+                    TextField("Exams", text: $type)
                         .multilineTextAlignment(.trailing)
                         .frame(maxHeight: .infinity)
                 }
@@ -102,14 +110,11 @@ private struct CategoryView: View {
                 }
                 
                 HStack {
-                    Text("Weight")
-                    TextField("25", text: $weight)
+                    Text("Weight").bold()
+                    TextField("25.00", text: $weight)
                         .keyboardType(.decimalPad)
                         .multilineTextAlignment(.trailing)
                         .frame(maxHeight: .infinity)
-                    Text("%")
-                        .foregroundColor(weight.isEmpty ? .secondary : .primary)
-                        .padding(.leading, -5)
                 }
                 .alert(isPresented: $showingWeightAlert) {
                     Alert(title: Text("Error"), message: Text("Category Weight must be a valid number"))
@@ -124,7 +129,7 @@ private struct CategoryView: View {
         .navigationBarItems(trailing: doneButton)
         .onDisappear {
             self.type = self.category.type
-            self.weight = String(self.category.weight)
+            self.weight = String(format: "%.2f", self.category.weight)
             self.count = self.category.count
         }
     }
@@ -135,7 +140,7 @@ private struct CategoryView: View {
                 Text(category.type + ":").bold()
                 Text(String(category.count))
                 Spacer()
-                Text(String(format: "%.2f%% each", category.averageWeight))
+                Text(String(format: "%.2f", category.weight))
             }
         }
     }
