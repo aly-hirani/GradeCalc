@@ -38,12 +38,15 @@ class Category: Identifiable, Comparable {
 struct CategoriesSection: View {
     @Binding private var categories: [Category]
     
+    @State private var totalWeight: Float = 0
+    
     private var addCategoryButton: some View {
         Button(action: addCategory, label: { Text("Add Grade Category").bold() })
     }
     
     init(_ categories: Binding<[Category]>) {
         _categories = categories
+        _totalWeight = State(initialValue: calculateTotalWeight())
     }
     
     var body: some View {
@@ -51,14 +54,15 @@ struct CategoriesSection: View {
             ForEach(categories) { category in
                 CategoryView(category) {
                     self.categories.sort()
+                    self.totalWeight = self.calculateTotalWeight()
                 }
             }
-            .onDelete { o in self.categories.remove(atOffsets: o) }
+            .onDelete(perform: deleteCategories)
 
             HStack {
                 Text("Total Current Weight").bold()
                 Spacer()
-                Text(String(format: "%.2f", categories.reduce(0, { r, c in r + c.weight }))).bold()
+                Text(String(format: "%.2f", totalWeight)).bold()
             }
             
             addCategoryButton
@@ -68,6 +72,16 @@ struct CategoriesSection: View {
     private func addCategory() {
         categories.append(Category(type: "Exams", weight: 25, count: 2))
         categories.sort()
+        totalWeight = calculateTotalWeight()
+    }
+    
+    private func deleteCategories(at offsets: IndexSet) {
+        categories.remove(atOffsets: offsets)
+        totalWeight = calculateTotalWeight()
+    }
+    
+    private func calculateTotalWeight() -> Float {
+        categories.reduce(0, { r, c in r + c.weight })
     }
 }
 
