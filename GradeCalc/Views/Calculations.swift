@@ -24,16 +24,16 @@ struct Calculations: View {
             accumulatedWeight += individualWeight * Float(c.grades.count)
             totalWeight += c.weight
         }
-
-        let calc: (Float) -> Float = { cutoff in
-            if accumulatedWeight == totalWeight {
-                return cutoff
-            } else {
-                return (cutoff / 100 * totalWeight - accumulatedPoints) / (totalWeight - accumulatedWeight) * 100
-            }
-        }
         
         let canCalculate = 0 < accumulatedWeight && accumulatedWeight < totalWeight
+        
+        let calc: (Float) -> Float = { cutoff in
+            if canCalculate {
+                return (cutoff / 100 * totalWeight - accumulatedPoints) / (totalWeight - accumulatedWeight) * 100
+            } else {
+                return cutoff
+            }
+        }
         
         return Form {
             Section(header: Text("Course Info")) {
